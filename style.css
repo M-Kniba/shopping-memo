@@ -27,10 +27,19 @@ margin-bottom:10px;
 .inputArea{
 display:flex;
 gap:10px;
+align-items:center;
 }
 
 .inputArea input{
 flex:1;
+margin:0;
+}
+
+.inputArea button{
+width:auto;
+margin:0;
+padding:10px 14px;
+white-space:nowrap;
 }
 
 ul{
