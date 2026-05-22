@@ -120,10 +120,7 @@ function renderShoppingList(){
             saveShoppingList(items)
             renderShoppingList()
         }
-
-        li.onclick=()=>{
-            openPriceEdit(item.id)
-        }
+        ul.appendChild(li)
     })
 }
 
@@ -167,6 +164,7 @@ function renderFrequent(){
                 checked:false
             })
             saveShoppingList(shopping)
+            renderShoppingList()
             alert("追加しました")
         }
     area.appendChild(btn)
