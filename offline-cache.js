@@ -1,4 +1,4 @@
-const CACHE_NAME="shopping-memo-v1"
+const CACHE_NAME="shopping-memo-v2"
 self.addEventListener("install",event=>{
     event.waitUntil(
     caches.open(CACHE_NAME).then(cache=>{
