@@ -1,0 +1,98 @@
+body{
+font-family:sans-serif;
+padding:20px;
+background:#fafafa;
+}
+
+header{
+text-align:center;
+margin-bottom:20px;
+}
+
+button{
+width:100%;
+padding:14px;
+margin:8px 0;
+font-size:16px;
+}
+
+input{
+padding:12px;
+font-size:16px;
+width:100%;
+box-sizing:border-box;
+margin-bottom:10px;
+}
+
+.inputArea{
+display:flex;
+gap:10px;
+}
+
+.inputArea input{
+flex:1;
+}
+
+ul{
+list-style:none;
+padding:0;
+}
+
+li{
+padding:14px;
+border-bottom:1px solid #ddd;
+font-size:17px;
+background:white;
+margin-bottom:6px;
+border-radius:8px;
+}
+
+.checked{
+text-decoration:line-through;
+opacity:0.5;
+}
+
+.screen{
+display:none;
+}
+
+.screen.active{
+display:block;
+}
+
+#frequentItems{
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+margin-bottom:20px;
+}
+
+#frequentItems button{
+width:auto;
+padding:10px 14px;
+}
+
+#vegetableList button{
+margin-bottom:10px;
+}
+
+.vegetableRow{
+display:flex;
+align-items:center;
+gap:10px;
+background:white;
+padding:10px;
+border-radius:8px;
+margin-bottom:10px;
+}
+
+.vegetableRow span{
+flex:1;
+font-size:18px;
+}
+
+.vegetableRow button{
+width:auto;
+margin:0;
+padding:8px 12px;
+}

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shopping Memo</title>
+
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+<header>
+    <h1>Shopping Memo</h1>
+</header>
+
+<!-- ホーム -->
+<section id="homeScreen" class="screen active">
+    <button onclick="openAdd()">＋ 買い物メモを追加</button>
+    <button onclick="openList()">買い物メモを見る</button>
+    <button onclick="openPriceHome()">価格メモ</button>
+</section>
+
+<!-- 追加画面 -->
+<section id="addScreen" class="screen">
+    <h2>買い物メモ追加</h2>
+    <div class="inputArea">
+        <input id="itemInput" placeholder="商品名">
+        <button onclick="addCustom()">追加</button>
+    </div>
+
+    <h3>よく買うもの</h3>
+    <div id="frequentItems"></div>
+
+    <h3>よく買うもの登録</h3>
+    <div class="inputArea">
+        <input id="frequentInput" placeholder="登録する商品名">
+        <button onclick="addFrequent()">登録</button>
+    </div>
+
+    <button onclick="goHome()">戻る</button>
+</section>
+
+<!-- 買い物リスト -->
+<section id="listScreen" class="screen">
+    <h2>買い物リスト</h2>
+    <ul id="shoppingList"></ul>
+    <button onclick="clearAll()">買い物後に一括削除</button>
+    <button onclick="goHome()">戻る</button>
+</section>
+
+<!-- 価格メモ ホーム -->
+<section id="priceHomeScreen" class="screen">
+    <h2>価格メモ</h2>
+    <button onclick="openPriceAdd()">価格を記録</button>
+
+    <h3>商品一覧</h3>
+    <div id="vegetableList"></div>
+
+    <button onclick="goHome()">戻る</button>
+</section>
+
+<!-- 価格追加 -->
+<section id="priceAddScreen" class="screen">
+    <h2>価格記録</h2>
+    <div class="formArea">
+        <input id="priceName" placeholder="商品名">
+            <select id="priceStore" onchange="toggleOtherStore()">
+                <option value="">店を選択</option>
+                <option value="まいばす">まいばす</option>
+                <option value="ヨーカドー">ヨーカドー</option>
+                <option value="アタック">アタック</option>
+                <option value="Big-A">Big-A</option>
+                <option value="ヤマイチ">ヤマイチ</option>
+                <option value="業務スーパー">業務スーパー</option>
+                <option value="コンビニ">コンビニ</option>
+                <option value="その他">その他</option>
+            </select>
+        <input id="otherStore" placeholder="店名入力" style="display:none;" >
+        <input id="priceQuantity" type="number" placeholder="数量">
+        <input id="priceTotal" type="number" placeholder="合計価格">
+        <input id="priceDate" type="date">
+        <button onclick="addPriceHistory()">保存</button>
+    </div>
+    <button onclick="openPriceHome()">戻る</button>
+</section>
+
+<!-- 価格履歴 -->
+<section id="priceDetailScreen" class="screen">
+    <h2 id="detailTitle"></h2>
+    <select id="priceSortSelect" onchange="changePriceSort()">
+        <option value="unitPrice">単価が安い順</option>
+        <option value="store">店名順</option>
+    </select>
+    <ul id="priceHistoryList"></ul>
+    <button onclick="openPriceHome()">戻る</button>
+</section>
+
+<script src="app.js"></script>
+
+</body>
+</html>
