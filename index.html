@@ -19,6 +19,7 @@
     <button onclick="openAdd()">＋ 買い物メモを追加</button>
     <button onclick="openList()">買い物メモを見る</button>
     <button onclick="openPriceHome()">価格メモ</button>
+    <button onclick="openSettings()">設定</button>
 </section>
 
 <!-- 追加画面 -->
@@ -65,20 +66,10 @@
     <h2>価格記録</h2>
     <div class="formArea">
         <input id="priceName" placeholder="商品名">
-            <select id="priceStore" onchange="toggleOtherStore()">
-                <option value="">店を選択</option>
-                <option value="まいばす">まいばす</option>
-                <option value="ヨーカドー">ヨーカドー</option>
-                <option value="アタック">アタック</option>
-                <option value="Big-A">Big-A</option>
-                <option value="ヤマイチ">ヤマイチ</option>
-                <option value="業務スーパー">業務スーパー</option>
-                <option value="コンビニ">コンビニ</option>
-                <option value="その他">その他</option>
-            </select>
+        <select id="priceStore" onchange="toggleOtherStore()"></select>
         <input id="otherStore" placeholder="店名入力" style="display:none;" >
-        <input id="priceQuantity" type="number" placeholder="数量">
-        <input id="priceTotal" type="number" placeholder="合計価格">
+        <input id="priceQuantity" type="number" placeholder="数量" min="1" step="1">
+        <input id="priceTotal" type="number" placeholder="合計価格" min="1">
         <input id="priceDate" type="date">
         <button onclick="addPriceHistory()">保存</button>
     </div>
@@ -94,6 +85,25 @@
     </select>
     <ul id="priceHistoryList"></ul>
     <button onclick="openPriceHome()">戻る</button>
+</section>
+
+<!-- 設定画面 -->
+<section id="settingsScreen" class="screen">
+    <h2>設定</h2>
+    <button onclick="openStoreSettings()">店名リスト編集</button>
+    <button onclick="goHome()">戻る</button>
+</section>
+
+<!-- 店名設定画面 -->
+<section id="storeSettingsScreen" class="screen">
+    <h2>店名リスト編集</h2>
+    <div class="inputArea">
+        <input id="storeInput" placeholder="店名" >
+        <button onclick="addStore()">追加</button>
+    </div>
+    <ul id="storeList"></ul>
+
+    <button onclick="openSettings()">戻る</button>
 </section>
 
 <script src="app.js"></script>
