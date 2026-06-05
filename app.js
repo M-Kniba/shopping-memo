@@ -77,6 +77,8 @@ function resetPriceForm(name=""){
 
     document.getElementById("priceQuantity").value=""
     document.getElementById("priceTotal").value=""
+    document.getElementById("priceType").value = "piece"
+    changePriceType()
 }
 
 /* =========================
@@ -213,6 +215,7 @@ function addPriceHistory(){
     const storeSelect=document.getElementById("priceStore").value
     const otherStore=document.getElementById("otherStore").value.trim().replace(/\s+/g," ")
     const store = storeSelect==="その他" ? otherStore : storeSelect
+    const priceType = document.getElementById("priceType").value
     const quantity=Number(document.getElementById("priceQuantity").value)
     const total=Number(document.getElementById("priceTotal").value)
     const date=document.getElementById("priceDate").value
@@ -226,7 +229,12 @@ function addPriceHistory(){
         return
     }
 
-    const unitPrice=(total/quantity).toFixed(2)
+    let unitPrice
+    if(priceType === "piece"){
+        unitPrice = (total / quantity).toFixed(2)
+    }else{
+        unitPrice = (total / quantity * 100).toFixed(2)
+    }
     const history=loadData("priceHistory")
     if(editingPriceId !== null){
         const index = history.findIndex(
@@ -240,6 +248,7 @@ function addPriceHistory(){
             id:editingPriceId,
             name:name,
             store:store,
+            priceType: priceType,
             quantity:quantity,
             total:total,
             unitPrice:unitPrice,
@@ -251,6 +260,7 @@ function addPriceHistory(){
             id:Date.now(),
             name:name,
             store:store,
+            priceType: priceType,
             quantity:quantity,
             total:total,
             unitPrice:unitPrice,
@@ -332,11 +342,13 @@ function renderPriceHistory(name){
     ul.innerHTML=""
     history.forEach(item=>{
         const li=document.createElement("li")
+        const quantityLabel = item.priceType === "weight" ? "g" : "個"
+        const unitLabel = item.priceType === "weight" ? "100gあたり" : "1個あたり"
         li.innerHTML=`
             <div>${item.date}</div>
             <div>${item.store}</div>
-            <div>${item.quantity}個 / ${item.total}円</div>
-            <div><strong>1個あたり ${item.unitPrice}円</strong></div>
+            <div>${item.quantity}${quantityLabel} / ${item.total}円</div>
+            <div><strong>${unitLabel} ${item.unitPrice}円</strong></div>
         `
         li.onclick=()=>{ openPriceEdit(item.id) }
         ul.appendChild(li)
@@ -372,6 +384,8 @@ function openPriceEdit(id){
     document.getElementById("priceQuantity").value=item.quantity
     document.getElementById("priceTotal").value=item.total
     document.getElementById("priceDate").value=item.date
+    document.getElementById("priceType").value = item.priceType || "piece" 
+    changePriceType()
 }
 
 function toggleOtherStore(){
@@ -414,7 +428,12 @@ function renderStoreOptions(){
     otherOption.value="その他"
     otherOption.textContent="その他"
     select.appendChild(otherOption)
+}
 
+function changePriceType(){
+    const type = document.getElementById("priceType").value
+    document.getElementById("quantityLabel").textContent = type === "weight" ? "グラム数" : "個数"
+    document.getElementById("priceQuantity").placeholder = type === "weight" ? "重量(g)" : "個数"
 }
 
 /* =========================

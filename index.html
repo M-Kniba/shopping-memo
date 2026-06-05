@@ -68,7 +68,12 @@
         <input id="priceName" placeholder="商品名">
         <select id="priceStore" onchange="toggleOtherStore()"></select>
         <input id="otherStore" placeholder="店名入力" style="display:none;" >
-        <input id="priceQuantity" type="number" placeholder="数量" min="1" step="1">
+        <select id="priceType" onchange="changePriceType()">
+            <option value="piece">個数</option>
+            <option value="weight">重量(g)</option>
+        </select>
+        <label id="quantityLabel">個数</label>
+        <input id="priceQuantity" type="number" min="1" step="1">
         <input id="priceTotal" type="number" placeholder="合計価格" min="1">
         <input id="priceDate" type="date">
         <button onclick="addPriceHistory()">保存</button>
