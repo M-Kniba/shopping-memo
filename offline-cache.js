@@ -1,4 +1,4 @@
-const CACHE_NAME="shopping-memo-v5"
+const CACHE_NAME="shopping-memo-v6"
 self.addEventListener("install",event=>{
     event.waitUntil(
     caches.open(CACHE_NAME).then(cache=>{
@@ -7,7 +7,9 @@ self.addEventListener("install",event=>{
             "./index.html",
             "./style.css",
             "./app.js",
-            "./manifest.json"
+            "./manifest.json",
+            "./image/app-icon_192px.png",
+            "./image/app-icon_512px.png"
         ])
     })
     )
