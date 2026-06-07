@@ -98,6 +98,98 @@ function saveData(key,data){
 }
 
 /* =========================
+バックアップ
+========================= */
+
+function createBackup(){
+    const result = confirm( "バックアップを作成しますか？\n\n" + "現在のデータをJSONファイルとして保存します。")
+    if(!result) return
+
+    const backupData = {
+        shoppingList: loadData("shoppingList"),
+        frequentItems: loadData("frequentItems"),
+        priceHistory: loadData("priceHistory"),
+        stores: loadData("stores"),
+        exportedAt: new Date().toISOString()
+    }
+
+    const blob = new Blob(
+        [JSON.stringify(backupData,null,2)],
+        {type:"application/json"}
+    )
+
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement("a")
+    a.href = url
+
+    const now = new Date()
+    const fileName = `shopping-memo-backup-${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,"0")}-${String(now.getDate()).padStart(2,"0")}.json`
+
+    a.download = fileName
+    a.click()
+
+    URL.revokeObjectURL(url)
+
+    localStorage.setItem( "lastBackupDate", new Date().toISOString())
+
+    renderLastBackupDate()
+    alert("バックアップを作成しました")
+}
+
+async function restoreBackup(event){
+    const file = event.target.files[0]
+    if(!file) return
+
+    try{
+        const text = await file.text()
+        const data = JSON.parse(text)
+
+        const shoppingCount = (data.shoppingList || []).length
+        const frequentCount = (data.frequentItems || []).length
+        const priceCount = (data.priceHistory || []).length
+        const storeCount = (data.stores || []).length
+
+        const result = confirm(
+            `バックアップ内容\n\n` +
+            `買い物メモ: ${shoppingCount}件\n` +
+            `よく買うもの: ${frequentCount}件\n` +
+            `価格履歴: ${priceCount}件\n` +
+            `店舗: ${storeCount}件\n\n` +
+            `復元しますか？`
+        )
+
+        if(!result){
+            event.target.value=""
+            return
+        }
+
+        saveData("shoppingList", data.shoppingList || [])
+        saveData("frequentItems", data.frequentItems || [])
+        saveData("priceHistory", data.priceHistory || [])
+        saveData("stores", data.stores || [])
+
+        alert("復元しました")
+        renderFrequent()
+        renderVegetableList()
+    }catch{
+        alert("バックアップファイルを読み込めませんでした")
+    }
+    event.target.value=""
+}
+
+function renderLastBackupDate(){
+    const text = document.getElementById("lastBackupText")
+    const date = localStorage.getItem("lastBackupDate")
+
+    if(!date){
+        text.textContent = "最終バックアップ: なし"
+        return
+    }
+
+    text.textContent = "最終バックアップ: " + new Date(date).toLocaleString("ja-JP")
+}
+
+/* =========================
 買い物メモ
 ========================= */
 function addCustom(){
@@ -489,3 +581,4 @@ function addStore(){
 
 renderFrequent()
 renderVegetableList()
+renderLastBackupDate()

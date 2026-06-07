@@ -96,6 +96,10 @@
 <section id="settingsScreen" class="screen">
     <h2>設定</h2>
     <button onclick="openStoreSettings()">店名リスト編集</button>
+    <button onclick="createBackup()">バックアップ作成</button>
+    <input type="file" id="backupFile" accept=".json" onchange="restoreBackup(event)">
+    <p id="lastBackupText">最終バックアップ: なし</p>
+
     <button onclick="goHome()">戻る</button>
 </section>
 
