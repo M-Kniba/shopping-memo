@@ -19,6 +19,7 @@ let priceSortMode = "unitPrice"
 function show(id){
     document.querySelectorAll(".screen").forEach(screen=>screen.classList.remove("active"))
     document.getElementById(id).classList.add("active")
+    updateBackButton(id)
 }
 
 function goHome(){
@@ -60,6 +61,34 @@ function openSettings(){
 function openStoreSettings(){
     show("storeSettingsScreen")
     renderStoreList()
+}
+
+/* =========================
+全体用機能
+========================= */
+function updateBackButton(id){
+    const btn = document.getElementById("backBtn")
+    switch(id){
+        case "homeScreen":
+            btn.style.display = "none"
+            break
+        case "addScreen":
+        case "listScreen":
+        case "priceHomeScreen":
+        case "settingsScreen":
+            btn.style.display = "block"
+            btn.onclick = goHome
+            break
+        case "priceAddScreen":
+        case "priceDetailScreen":
+            btn.style.display = "block"
+            btn.onclick = openPriceHome
+            break
+        case "storeSettingsScreen":
+            btn.style.display = "block"
+            btn.onclick = openSettings
+            break
+    }
 }
 
 /* =========================

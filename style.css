@@ -105,3 +105,16 @@ width:auto;
 margin:0;
 padding:8px 12px;
 }
+
+.floatingBackBtn{
+position:fixed;
+left:20px;
+bottom:20px;
+width:56px;
+height:56px;
+border:none;
+border-radius:50%;
+font-size:24px;
+cursor:pointer;
+z-index:1000;
+}

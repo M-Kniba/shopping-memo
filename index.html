@@ -39,8 +39,6 @@
         <input id="frequentInput" placeholder="登録する商品名">
         <button onclick="addFrequent()">登録</button>
     </div>
-
-    <button onclick="goHome()">戻る</button>
 </section>
 
 <!-- 買い物リスト -->
@@ -48,7 +46,6 @@
     <h2>買い物リスト</h2>
     <ul id="shoppingList"></ul>
     <button onclick="clearAll()">買い物後に一括削除</button>
-    <button onclick="goHome()">戻る</button>
 </section>
 
 <!-- 価格メモ ホーム -->
@@ -58,8 +55,6 @@
 
     <h3>商品一覧</h3>
     <div id="vegetableList"></div>
-
-    <button onclick="goHome()">戻る</button>
 </section>
 
 <!-- 価格追加 -->
@@ -79,7 +74,6 @@
         <input id="priceDate" type="date">
         <button onclick="addPriceHistory()">保存</button>
     </div>
-    <button onclick="openPriceHome()">戻る</button>
 </section>
 
 <!-- 価格履歴 -->
@@ -90,7 +84,6 @@
         <option value="store">店名順</option>
     </select>
     <ul id="priceHistoryList"></ul>
-    <button onclick="openPriceHome()">戻る</button>
 </section>
 
 <!-- 設定画面 -->
@@ -100,8 +93,6 @@
     <button onclick="createBackup()">バックアップ作成</button>
     <input type="file" id="backupFile" accept=".json" onchange="restoreBackup(event)">
     <p id="lastBackupText">最終バックアップ: なし</p>
-
-    <button onclick="goHome()">戻る</button>
 </section>
 
 <!-- 店名設定画面 -->
@@ -113,9 +104,9 @@
     </div>
     <ul id="storeList"></ul>
 
-    <button onclick="openSettings()">戻る</button>
 </section>
 
+<button id="backBtn" class="floatingBackBtn" style="display:none;">←</button>
 <script src="app.js"></script>
 
 </body>
