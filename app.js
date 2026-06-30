@@ -12,6 +12,7 @@ if("serviceWorker" in navigator){
  */
 let editingPriceId = null
 let priceSortMode = "unitPrice"
+let productSortMode = "recent"
 /* =========================
 画面切替
 ========================= */
@@ -38,6 +39,9 @@ function openList(){
 
 function openPriceHome(){
     show("priceHomeScreen")
+    document.getElementById("priceSearch").value = ""
+    productSortMode = "recent"
+    document.getElementById("productSortSelect").value = "recent"
     renderVegetableList()
 }
 
@@ -398,39 +402,57 @@ function addPriceHistory(){
 }
 
 function renderVegetableList(){
-    const area=document.getElementById("vegetableList")
-    const history=loadData("priceHistory")
-    const uniqueNames=[...new Set(history.map(h=>h.name))]
+    const area = document.getElementById("vegetableList")
+    const history = loadData("priceHistory")
+    const keyword = document.getElementById("priceSearch")?.value.trim().toLowerCase() || ""
+
+    let products = []
+    history.forEach(item=>{
+        let product = products.find(p=>p.name===item.name)
+        if(!product){
+            product = {
+                name:item.name,
+                latest:item.date
+            }
+            products.push(product)
+        }else if(item.date > product.latest){
+            product.latest = item.date
+        }
+    })
+
+    if(keyword){
+        products = products.filter(product=> product.name.toLowerCase().includes(keyword))
+    }
+
+    if(productSortMode==="recent"){
+        products.sort((a,b)=> b.latest.localeCompare(a.latest))
+    }else{
+        products.sort((a,b)=> a.name.localeCompare(b.name,"ja"))
+    }
+
     area.innerHTML=""
-    if(uniqueNames.length===0){
-        area.textContent="まだ登録がありません"
+    if(products.length===0){
+        area.textContent="該当する商品がありません"
         return
     }
 
-    uniqueNames.forEach(name=>{
-        /* 行全体 */
+    products.forEach(product=>{
         const row=document.createElement("div")
         row.className="vegetableRow"
-
-        /* 商品名 */
         const title=document.createElement("span")
-        title.textContent=name
-
-        /* 追加ボタン */
+        title.textContent=product.name
         const addBtn=document.createElement("button")
         addBtn.textContent="追加"
         addBtn.onclick=()=>{
-            openPriceAdd(name)
+            openPriceAdd(product.name)
         }
 
-        /* 履歴ボタン */
         const historyBtn=document.createElement("button")
         historyBtn.textContent="履歴"
         historyBtn.onclick=()=>{
-            openPriceDetail(name)
+            openPriceDetail(product.name)
         }
 
-        /* 追加 */
         row.appendChild(title)
         row.appendChild(addBtn)
         row.appendChild(historyBtn)
@@ -555,6 +577,11 @@ function changePriceType(){
     const type = document.getElementById("priceType").value
     document.getElementById("quantityLabel").textContent = type === "weight" ? "グラム数" : "個数"
     document.getElementById("priceQuantity").placeholder = type === "weight" ? "重量(g)" : "個数"
+}
+
+function changeProductSort(){
+    productSortMode = document.getElementById("productSortSelect").value
+    renderVegetableList()
 }
 
 /* =========================

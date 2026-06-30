@@ -53,8 +53,15 @@
     <h2>価格メモ</h2>
     <button onclick="openPriceAdd()">価格を記録</button>
 
-    <h3>商品一覧</h3>
-    <div id="vegetableList"></div>
+<input id="priceSearch" type="search" placeholder="商品名検索" oninput="renderVegetableList()">
+
+<select id="productSortSelect" onchange="changeProductSort()">
+    <option value="recent">履歴が新しい順</option>
+    <option value="name">名前順</option>
+</select>
+
+<h3>商品一覧</h3>
+<div id="vegetableList"></div>
 </section>
 
 <!-- 価格追加 -->
